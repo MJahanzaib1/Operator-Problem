@@ -1,61 +1,13 @@
-class Stack {
- 
-    constructor()
-    {
-        this.items = [];
-    }
-    push(element)
-    {
-        this.items.push(element);
-    }
-    pop()
-    {
-        if (this.items.length == 0)
-            return "Underflow";
-        return this.items.pop();
-    }
-    top()
-    {
-        return this.items[this.items.length - 1];
-    }
-    isEmpty()
-    {
-        return this.items.length == 0;
-    }
-    printStack()
-    {
-        var str = "";
-        for (var i = 0; i < this.items.length; i++)
-            str += this.items[i] + " ";
-        return str;
-    }
-}
-function isOperator(element){
-    if(element === "OR" || element === "AND" || element === "NOT"|| element === "==" || element === "!=" || element === ">" || element === "<" || element === ">=" || element === "<=" || element === "OR"){
-        return true;
-    }
-    else 
-        return false;
-}
 function traverseArray(array){
-    let operators = new Stack();
-    let operands = new Stack();
-    array.forEach(element => {
-        if(Array.isArray(element)){
-            operands.push(traverseArray(element));
-        }
-        else if(isOperator(element)){
-            operators.push(element);
-        }
-        else{
-            operands.push(element);
-        }
-    });
-
-    let operand2 = operands.pop();
-    let operand1 = operands.pop();
-    let operator = operators.pop();
-
+    let operator = array[0];
+    let operand1 = array[1];
+    let operand2 = array[2];
+    if(Array.isArray(operand1)){
+        operand1 = traverseArray(operand1);
+    }
+    if(Array.isArray(operand2)){
+        operand2 = traverseArray(operand2);
+    }
     let result = "( " + operand1 + " "+ operator + " " + operand2 + " )";
     return result;
 }
